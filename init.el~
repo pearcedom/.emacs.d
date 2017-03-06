@@ -1,0 +1,62 @@
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+
+;; use pacakge functionality
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (setq use-package-always-ensure t)
+  (require 'use-package)
+  )
+
+(use-package diminish)
+
+;; me
+(setq user-full-name "Dominic Pearce"
+            user-mail-address "dominic.pearce@outlook.com")
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (molokai)))
+ '(custom-safe-themes
+   (quote
+    ("b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(require 'ess-site)
+
+;; bracket matching
+(electric-pair-mode 1)
+
+;; bracket matching
+(use-package rainbow-delimiters
+	     :config
+	     (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+	     )
+
+;; line width
+(setq-default fill-column 120)
+
+;; cursor line highlighting
+;; (global-hl-line-mode)
+
+;; soft wrap lines
+(autoload 'longlines-mode "longlines.el" "Minor mode for editing long lines." t)
+
+;; allow uppercase conversion
+(put 'upcase-region 'disabled nil)
