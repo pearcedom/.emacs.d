@@ -27,10 +27,45 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(Linum-format "%7i ")
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#110F13" "#B13120" "#719F34" "#CEAE3E" "#7C9FC9" "#7868B5" "#009090" "#F4EAD5"])
  '(custom-enabled-themes (quote (molokai)))
  '(custom-safe-themes
    (quote
-    ("b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" default))))
+	("bc40f613df8e0d8f31c5eb3380b61f587e1b5bc439212e03d4ea44b26b4f408a" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "cdf96318f1671344564ba74ef75cc2a3f4692b2bee77de9ce9ff5f165de60b1f" "a4bd55761752bddac75bad0a78f8c52081a1effb33b69354e30a64869b5a40b9" "9f3181dc1fabe5d58bbbda8c48ef7ece59b01bed606cfb868dd147e8b36af97c" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" default)))
+ '(fci-rule-character-color "#202020")
+ '(fci-rule-color "#202020")
+ '(fringe-mode 4 nil (fringe))
+ '(main-line-color1 "#1E1E1E")
+ '(main-line-color2 "#111111")
+ '(main-line-separator-style (quote chamfer))
+ '(powerline-color1 "#1E1E1E")
+ '(powerline-color2 "#111111")
+ '(vc-annotate-background "#181e26")
+ '(vc-annotate-color-map
+   (quote
+	((20 . "#98be65")
+	 (40 . "#afaf6c")
+	 (60 . "#d7af79")
+	 (80 . "#ECBE7B")
+	 (100 . "#f1a179")
+	 (120 . "#e4946c")
+	 (140 . "#da8548")
+	 (160 . "#d78787")
+	 (180 . "#d787af")
+	 (200 . "#c678dd")
+	 (220 . "#e479af")
+	 (240 . "#f16c87")
+	 (260 . "#ff6c6b")
+	 (280 . "#d25a5a")
+	 (300 . "#a65656")
+	 (320 . "#7a5252")
+	 (340 . "#525252")
+	 (360 . "#525252"))))
+ '(vc-annotate-very-old-color nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -126,7 +161,7 @@
 (setq scroll-conservatively 10000)
 
 ;; pane movement
-(windmove-default-keybindings)
+(windmove-default-keybindings 'meta)
 (global-set-key (kbd "C-c <left>") 'windmove-left)
 (global-set-key (kbd "C-c <right>") 'windmove-right)
 (global-set-key (kbd "C-c <up>") 'windmove-up)
@@ -195,3 +230,64 @@
 								   (message) line-end))
 						 :modes (text-mode markdown-mode org-mode))
 (add-to-list 'flycheck-checkers 'proselint)
+
+(add-to-list 'load-path "~/.emacs.d/julia-shell-mode/")
+(require 'julia-shell)
+
+(defun my-julia-mode-hooks ()
+  (require 'julia-shell-mode))
+(add-hook 'julia-mode-hook 'my-julia-mode-hooks)
+(define-key julia-mode-map (kbd "C-c C-c") 'julia-shell-run-region-or-line)
+(define-key julia-mode-map (kbd "C-c C-s") 'julia-shell-save-and-go)
+
+
+;; neotree for project file/folder display
+(add-to-list 'load-path "~/.emacs.d/neotree")
+  (require 'neotree)
+  (global-set-key [f8] 'neotree-toggle)
+
+;; dashboard on start up
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+
+
+;; minimap
+(require 'sublimity)
+;; (require 'sublimity-scroll)
+;; (require 'sublimity-map) ;; experimental
+;; (require 'sublimity-attractive)
+;; (sublimity-mode 1)
+
+;; multiple cursors
+(require 'multiple-cursors)
+
+;; jedi for python
+(add-hook 'python-mode-hook 'jedi:setup)
+
+;; powerline
+(require 'powerline)
+(powerline-default-theme)
+
+;; mode icons
+;;(require 'mode-icons)
+
+;; smex
+(require 'smex) ; Not needed if you use package.el
+(smex-initialize) ; Can be omitted. This might cause a (minimal) delay
+										; when Smex is auto-initialized on its first run.
+
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; This is your old M-x.
+  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
+(fringe-mode 0)
+
+
+;;powerline
+;;add-to-list 'load-path "~/.emacs.d/vendor/emacs-powerline")
+;;(require 'powerline)
+;;(require 'cl)

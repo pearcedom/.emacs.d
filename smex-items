@@ -1,0 +1,20 @@
+
+;; ----- smex-history -----
+(
+ powerline-default-theme
+ powerline-center-theme
+ powerline-vim-theme
+ powerline-reset
+ speedbar
+ R
+ S
+)
+
+;; ----- smex-data -----
+(
+ (speedbar . 2)
+ (powerline-reset . 1)
+ (powerline-vim-theme . 1)
+ (powerline-center-theme . 1)
+ (powerline-default-theme . 1)
+)
